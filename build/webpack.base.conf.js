@@ -1,15 +1,17 @@
 var path = require('path')
 var utils = require('./utils')
 var config = require('../config')
+var glob = require('glob')
 var vueLoaderConfig = require('./vue-loader.conf')
 
 function resolve(dir) {
   return path.join(__dirname, '..', dir)
 }
-
+// var entries = getEntry('./src/module/**/*.js') // 获得入口js文件
+// entries.push()
 module.exports = {
   entry: {
-    app: './src/main.js'
+    app: './src/main.js',
   },
   output: {
     path: config.build.assetsRoot,
@@ -56,4 +58,25 @@ module.exports = {
       }
     ]
   }
+}
+
+function getEntry(globPath) {
+    var entries = {},
+        basename, tmp, pathname;
+    if (typeof (globPath) != "object") {
+        globPath = [globPath]
+    }
+    globPath.forEach((itemPath) => {
+        glob.sync(itemPath).forEach(function (entry) {
+            basename = path.basename(entry, path.extname(entry));
+            if (entry.split('/').length > 4) {
+                tmp = entry.split('/').splice(-3);
+                pathname = tmp.splice(0, 1) + '/' + basename; // 正确输出js和html的路径
+                entries[pathname] = entry;
+            } else {
+                entries[basename] = entry;
+            }
+        });
+    });
+    return entries;
 }

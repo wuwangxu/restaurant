@@ -27,8 +27,28 @@ module.exports = {
     autoOpenBrowser: true,
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {},
-    // CSS Sourcemaps off by default because relative paths are "buggy"
+      // 代理配置表，在这里可以配置特定的请求代理到对应的API接口
+      // 例如将'localhost:8080/api/xxx'代理到'www.example.com/api/xxx'
+      // 使用方法：https://vuejs-templates.github.io/webpack/proxy.html
+      proxyTable: {
+          '/api': {
+              target: 'http://localhost:8088/order-system', // 接口的域名
+              // secure: false,  // 如果是https接口，需要配置这个参数
+              changeOrigin: true, // 如果接口跨域，需要进行这个参数配置
+              pathRewrite: {
+                  '^/api': '/api'
+              }
+          },
+          '/tqapi': {
+              target: 'http://data.cma.cn', // 接口的域名
+              // secure: false,  // 如果是https接口，需要配置这个参数
+              changeOrigin: true, // 如果接口跨域，需要进行这个参数配置
+              pathRewrite: {
+                  '^/tqapi': ''
+              }
+          }
+      },
+          // CSS Sourcemaps off by default because relative paths are "buggy"
     // with this option, according to the CSS-Loader README
     // (https://github.com/webpack/css-loader#sourcemaps)
     // In our experience, they generally work as expected,

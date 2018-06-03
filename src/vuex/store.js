@@ -7,7 +7,9 @@ Vue.use(Vuex)
 
 // 应用初始状态
 const state = {
-    count: 10
+    count: 10,
+    orders: [],
+    ordersTotal: 0
 }
 
 // 定义所需的 mutations

@@ -1,12 +1,24 @@
 <template>
-	<section>
-		main
-	</section>
+    <section>
+
+    </section>
 </template>
 
 <script>
-	export default {
-	}
+    import {gettq} from '../../api/api'
+
+    export default {
+        data() {
+            return {
+                tq: {},
+                updateTime: ''
+            }
+        },
+        methods: {
+        },
+        mounted() {
+        }
+    }
 
 </script>
 
